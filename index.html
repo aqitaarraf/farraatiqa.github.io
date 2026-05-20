@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farra Atiqa – Coffeeprint Technology</title>
+  <meta name="description" content="Digital business card for Farra Atiqa, Product Manager at Coffeeprint Technology Sdn. Bhd." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(160deg, #7c3aed 0%, #6d28d9 40%, #5b21b6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 400px;
+      overflow: visible;
+      box-shadow: 0 20px 60px rgba(90,33,182,.45);
+      position: relative;
+    }
+
+    /* clips rounded corners while letting avatar overflow */
+    .card-inner { border-radius: 28px; overflow: hidden; }
+
+    /* ── Header (no avatar inside) ── */
+    .card-header {
+      background: linear-gradient(145deg, #7c3aed 0%, #6d28d9 55%, #5b21b6 100%);
+      padding: 36px 28px 56px;
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+    }
+    .card-header::before {
+      content: '';
+      position: absolute; top: -50px; right: -50px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    .card-header::after {
+      content: '';
+      position: absolute; bottom: 10px; left: -40px;
+      width: 140px; height: 140px; border-radius: 50%;
+      background: rgba(255,255,255,.05);
+    }
+
+    .company-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.18);
+      color: rgba(255,255,255,.9);
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: .7px; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 20px;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Wave + Avatar wrapper ── */
+    .wave-wrap {
+      position: relative;
+      /* height matches wave SVG */
+    }
+    .wave { display: block; width: 100%; margin-top: -1px; }
+
+    /* Avatar sits centered on the wave, half above / half below */
+    .avatar-wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    .avatar {
+      width: 104px; height: 104px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+    }
+    .avatar-fallback {
+      width: 104px; height: 104px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; font-weight: 700; color: #fff;
+      letter-spacing: -1px;
+    }
+    /* gold spinning ring */
+    .avatar-ring {
+      position: absolute; inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(#fbbf24 0deg, #f59e0b 90deg, #fbbf24 180deg, #f59e0b 270deg, #fbbf24 360deg);
+      z-index: -1;
+    }
+    /* white gap between ring and photo */
+    .avatar-wrap > .avatar,
+    .avatar-wrap > .avatar-fallback {
+      outline: 3px solid #fff;
+    }
+
+    /* ── Name block (below wave, clears avatar) ── */
+    .name-block {
+      text-align: center;
+      padding: 30px 20px 12px;
+      background: #fff;
+    }
+    .card-name {
+      color: #1e1b4b;
+      font-size: 24px; font-weight: 700;
+      line-height: 1.2;
+    }
+    .card-position {
+      color: #7c3aed;
+      font-size: 13.5px; font-weight: 500;
+      margin-top: 4px;
+    }
+
+    /* ── 3-button quick row ── */
+    .contact-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 0 20px 20px;
+    }
+    .contact-btn {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+      background: #fff;
+      border: 1.5px solid #ede9fe;
+      border-radius: 16px;
+      padding: 12px 4px;
+      text-decoration: none;
+      color: #4c1d95;
+      font-size: 10px; font-weight: 600;
+      box-shadow: 0 2px 10px rgba(109,40,217,.08);
+      transition: all .18s ease;
+    }
+    .contact-btn:hover {
+      border-color: #7c3aed;
+      box-shadow: 0 6px 20px rgba(109,40,217,.18);
+      transform: translateY(-2px);
+    }
+    .contact-btn svg { width: 21px; height: 21px; }
+    .btn-phone svg { color: #25d366; }
+    .btn-wa    svg { color: #25d366; }
+    .btn-email svg { color: #7c3aed; }
+    .btn-web   svg { color: #f59e0b; }
+
+    /* divider */
+    .divider {
+      height: 1px; background: #f5f3ff;
+      margin: 0 16px 4px;
+    }
+
+    /* ── Info section ── */
+    .info-section { padding: 20px 20px 8px; }
+    .info-section h3 {
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: .9px; text-transform: uppercase;
+      color: #a78bfa; margin-bottom: 12px;
+    }
+
+    .info-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid #f5f3ff;
+    }
+    .info-item:last-child { border-bottom: none; }
+
+    .info-icon {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-phone { background: #f0fdf4; }
+    .icon-wa    { background: #f0fdf4; }
+    .icon-email { background: #faf5ff; }
+    .icon-web   { background: #fffbeb; }
+    .icon-addr  { background: #faf5ff; }
+
+    .info-icon svg { width: 18px; height: 18px; }
+    .icon-phone svg { color: #25d366; }
+    .icon-wa    svg { color: #25d366; }
+    .icon-email svg { color: #7c3aed; }
+    .icon-web   svg { color: #f59e0b; }
+    .icon-addr  svg { color: #7c3aed; }
+
+    .info-text { flex: 1; }
+    .info-label { font-size: 10.5px; color: #a78bfa; font-weight: 600; margin-bottom: 2px; }
+    .info-value { font-size: 13.5px; color: #1e1b4b; font-weight: 500; line-height: 1.5; }
+    .info-value a { color: #5b21b6; text-decoration: none; }
+    .info-value a:hover { text-decoration: underline; }
+
+    /* ── Action buttons ── */
+    .action-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; padding: 20px 20px 26px;
+    }
+    .action-btn {
+      display: flex; align-items: center; justify-content: center;
+      gap: 7px; padding: 14px; border-radius: 14px;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; border: none;
+      transition: all .18s ease;
+    }
+    .action-btn svg { width: 17px; height: 17px; }
+
+    .btn-save {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #1e1b4b;
+      box-shadow: 0 4px 16px rgba(245,158,11,.35);
+    }
+    .btn-save:hover { opacity: .9; transform: translateY(-1px); }
+
+    .btn-share {
+      background: #f5f3ff; color: #5b21b6;
+      border: 1.5px solid #ede9fe;
+    }
+    .btn-share:hover { background: #ede9fe; }
+
+    /* ── Footer ── */
+    .card-footer {
+      background: #faf5ff;
+      border-top: 1px solid #ede9fe;
+      text-align: center;
+      padding: 13px;
+      font-size: 10.5px; color: #c4b5fd;
+    }
+    .card-footer span { color: #7c3aed; font-weight: 700; }
+
+    /* ── Snackbar ── */
+    #snack {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #5b21b6; color: #fff;
+      padding: 10px 22px; border-radius: 40px;
+      font-size: 13px; font-weight: 500;
+      transition: transform .3s ease;
+      pointer-events: none; z-index: 999;
+    }
+    #snack.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="card">
+ <div class="card-inner">
+
+  <!-- Header (company tag only) -->
+  <div class="card-header">
+    <div class="company-tag">Coffeeprint Technology</div>
+  </div>
+
+  <!-- Wave with avatar floating on top -->
+  <div class="wave-wrap">
+    <svg class="wave" viewBox="0 0 400 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,0 C80,64 320,64 400,0 L400,0 L0,0 Z" fill="#6d28d9"/>
+      <path d="M0,0 C120,52 280,52 400,0 L400,64 L0,64 Z" fill="#ffffff"/>
+    </svg>
+
+    <!-- ── PROFILE PHOTO ──
+         Replace "your-photo.jpg" with your image filename.
+         Put the image in the same folder as this HTML file.
+    ── -->
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <img
+        class="avatar"
+        src="farra.jpeg"
+        alt="Farra Atiqa"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+      <div class="avatar-fallback" style="display:none;">FA</div>
+    </div>
+  </div>
+
+  <!-- Name block -->
+  <div class="name-block">
+    <div class="card-name">Farra Atiqa</div>
+    <div class="card-position">Product Manager</div>
+  </div>
+
+  <!-- 4 quick-action buttons -->
+  <div class="contact-row">
+    <a class="contact-btn btn-wa" href="https://wa.me/60128253897" target="_blank" rel="noopener">
+      <!-- WhatsApp icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      WhatsApp
+    </a>
+    <a class="contact-btn btn-email" href="mailto:farra@coffeeprint.com.my">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      Email
+    </a>
+    <a class="contact-btn btn-web" href="https://www.coffeeprint.com.my/" target="_blank" rel="noopener">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+      </svg>
+      Website
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Contact details -->
+  <div class="info-section">
+    <h3>Contact Details</h3>
+
+    <div class="info-item">
+      <div class="info-icon icon-wa">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </div>
+      <div class="info-text">
+        <div class="info-label">WhatsApp</div>
+        <div class="info-value"><a href="https://wa.me/60128253897" target="_blank" rel="noopener">+601-2825 3897</a></div>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon icon-email">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <div class="info-text">
+        <div class="info-label">Email</div>
+        <div class="info-value"><a href="mailto:farra@coffeeprint.com.my">farra@coffeeprint.com.my</a></div>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon icon-web">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+        </svg>
+      </div>
+      <div class="info-text">
+        <div class="info-label">Website</div>
+        <div class="info-value"><a href="https://www.coffeeprint.com.my/" target="_blank" rel="noopener">www.coffeeprint.com.my</a></div>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon icon-addr">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
+      <div class="info-text">
+        <div class="info-label">Address</div>
+        <div class="info-value">
+          No.14&amp;14A, Hata Industrial Centre<br>
+          Jalan Mewah 3/3, Pandan Mewah<br>
+          68000 Ampang, Selangor, Malaysia
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save / Share -->
+  <div class="action-row">
+    <button class="action-btn btn-save" onclick="saveContact()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+      </svg>
+      Save Contact
+    </button>
+    <button class="action-btn btn-share" onclick="shareCard()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+      </svg>
+      Share Card
+    </button>
+  </div>
+
+  <div class="card-footer">
+    <span>Coffeeprint Technology Sdn. Bhd.</span> (1386473-D)
+  </div>
+
+ </div><!-- /.card-inner -->
+</div><!-- /.card -->
+
+<div id="snack">Link copied!</div>
+
+<script>
+  function saveContact() {
+    const vcard = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'FN:Farra Atiqa',
+      'N:Atiqa;Farra;;;',
+      'ORG:Coffeeprint Technology Sdn. Bhd.',
+      'TITLE:Product Manager',
+      'TEL;TYPE=CELL:+60128253897',
+      'EMAIL:farra@coffeeprint.com.my',
+      'URL:https://www.coffeeprint.com.my/',
+      'ADR;TYPE=WORK:;;No.14&14A Hata Industrial Centre, Jalan Mewah 3/3 Pandan Mewah;Ampang;Selangor;68000;Malaysia',
+      'END:VCARD'
+    ].join('\r\n');
+
+    const blob = new Blob([vcard], { type: 'text/vcard' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = 'farra-atiqa.vcf'; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function shareCard() {
+    const url = window.location.href;
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Farra Atiqa – Coffeeprint Technology', url }); return; }
+      catch (_) {}
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      const snack = document.getElementById('snack');
+      snack.classList.add('show');
+      setTimeout(() => snack.classList.remove('show'), 2500);
+    } catch (_) { alert('Share: ' + url); }
+  }
+</script>
+</body>
+</html>
